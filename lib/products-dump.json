@@ -8253,7 +8253,7 @@
    "subtitulo": "Láser RGB de 600mW 6 Bocas",
    "slug": "vt6-600rgbiii",
    "description": "Venetian VT6-600RGBIII es un láser de efecto puntero con seis bocas de salida y una potencia combinada de 600mW en colores RGB. Se controla mediante DMX, modo automático o audiorítmico, ofreciendo versatilidad para crear efectos visuales dinámicos en eventos y espectáculos.",
-   "price": 206504.65,
+   "price": 185000.0,
    "sku": "2311011650384035",
    "modelo": "VT6-600RGBIII",
    "categoryName": "laser",
@@ -9953,5 +9953,5 @@
   }
  ],
  "slugMigratedAt": "2026-05-12T20:28:40.773Z",
- "pricesUpdatedAt": "2026-06-28T10:00:06"
+ "pricesUpdatedAt": "2026-07-02T10:00:06"
 }
