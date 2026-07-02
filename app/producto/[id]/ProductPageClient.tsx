@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { notFound } from 'next/navigation';
 import { fetchProduct, fetchProducts, Product } from '@/lib/api';
+import { useLivePrice } from '@/lib/live-prices';
 import Image from 'next/image';
 import {
   ShoppingCart,
@@ -51,6 +52,9 @@ export default function ProductPageClient({ id }: ProductPageProps) {
   const [loading, setLoading] = useState(true);
   const [activeImage, setActiveImage] = useState<string>('');
   const [lightboxOpen, setLightboxOpen] = useState(false);
+
+  // Precio en vivo desde el VPS (sin deploy); cae al horneado si no hay dato.
+  const livePrice = useLivePrice(product?.sku, product?.price ?? 0);
 
   const galleryImages = product?.images?.length
     ? product.images
@@ -226,10 +230,10 @@ export default function ProductPageClient({ id }: ProductPageProps) {
             </div>
 
             {/* Precio sugerido */}
-            {product.price > 0 && (
+            {livePrice > 0 && (
               <div className="mt-6">
                 <p className="text-3xl sm:text-4xl font-bold text-white">
-                  ${Math.round(product.price).toLocaleString('es-AR')}
+                  ${Math.round(livePrice).toLocaleString('es-AR')}
                 </p>
                 <p className="mt-1 text-xs text-gray-500">
                   Precio sugerido al público — IVA incluido. Consultá disponibilidad con tu distribuidor.

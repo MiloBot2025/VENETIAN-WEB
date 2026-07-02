@@ -5,11 +5,18 @@ lista de precios 7 (Precio LOCAL - ML), y deploya a Vercel via git push.
 Match: products-dump.json productos[].sku == Precios.IDC_Articulo (Id_ListaDePrecio=7, ARS).
 Solo commitea/pushea lib/products-dump.json — no toca otros archivos del repo.
 
-Usage:
-    python update_prices_from_heaven.py            # dry-run: muestra cambios
-    python update_prices_from_heaven.py --apply    # escribe JSON + commit + push
+Dos caminos:
+  1) EN VIVO (sin deploy): publica prices.json al VPS (Caddy CORS '*'); la web lo
+     lee y pisa el precio horneado en minutos. Corre en TODAS las invocaciones.
+  2) HORNEADO (fallback/SEO): con --apply reescribe products-dump.json + commit +
+     push + deploy a Vercel. Solo necesario para el precio server-side/JSON-LD.
 
-Programado diario via Task Scheduler (tarea: VenetianWebPrices).
+Usage:
+    python update_prices_from_heaven.py               # dry-run + publica JSON en vivo
+    python update_prices_from_heaven.py --json-only   # SOLO publica JSON en vivo (sin deploy)
+    python update_prices_from_heaven.py --apply       # JSON en vivo + dump + commit + push + deploy
+
+Programado: --json-only cada 1h (rápido, sin deploy) + --apply diario (fallback).
 """
 from __future__ import annotations
 
@@ -26,6 +33,13 @@ REPO = Path(r"C:\Users\User\milobot\web-marca")
 DUMP = REPO / "lib" / "products-dump.json"
 LISTA_LOCAL_ML = 7
 ID_MONEDA_ARS = 32
+
+# --- Precio en vivo SIN deploy ---------------------------------------------
+# La web lee este JSON desde el VPS (Caddy, CORS '*') y pisa el precio horneado.
+# Cambiar un precio en Heaven + correr esto = web actualizada en minutos, sin build.
+SSH_KEY = r"C:\Users\User\.ssh\contabo_vps"
+VPS_DEST = "root@109.199.96.54:/var/www/dmx-assets/prices.json"
+JSON_TMP = REPO / "lib" / "prices.live.json"
 
 # Web sku -> IDC de Heaven del que tomar el precio (cuando difieren).
 # Los CBL se venden por rollo en la web pero lista 7 tiene precio por metro.
@@ -70,14 +84,46 @@ def fetch_prices() -> dict[str, float]:
         conn.close()
 
 
+def build_live_map(prices: dict[str, float], productos: list) -> dict[str, float]:
+    """{sku_web: precio} para los SKUs de la web que tienen precio en Heoven."""
+    out: dict[str, float] = {}
+    for p in productos:
+        sku = str(p.get("sku") or "").strip()
+        val = prices.get(SKU_OVERRIDES.get(sku, sku))
+        if sku and val is not None and val > 0:
+            out[sku] = round(float(val), 2)
+    return out
+
+
+def publish_live_json(mapping: dict[str, float]) -> bool:
+    """Escribe prices.json y lo sube al VPS por scp. La web lo lee sin deploy."""
+    JSON_TMP.write_text(json.dumps(mapping, ensure_ascii=False), encoding="utf-8")
+    r = subprocess.run(
+        ["scp", "-i", SSH_KEY, "-o", "StrictHostKeyChecking=no", str(JSON_TMP), VPS_DEST],
+        capture_output=True, text=True,
+    )
+    if r.returncode != 0:
+        log(f"[web-prices] ERROR scp prices.json: {r.stderr.strip()}")
+        return False
+    log(f"[web-prices] prices.json publicado al VPS ({len(mapping)} precios, sin deploy)")
+    return True
+
+
 def main() -> int:
     apply = "--apply" in sys.argv
+    json_only = "--json-only" in sys.argv
 
     prices = fetch_prices()
     log(f"[web-prices] lista 7 (LOCAL-ML): {len(prices)} precios en Heaven")
 
     data = json.loads(DUMP.read_text(encoding="utf-8"))
     productos = data["productos"]
+
+    # Camino SIN deploy: publicar el JSON en vivo al VPS en toda corrida.
+    live = build_live_map(prices, productos)
+    ok = publish_live_json(live)
+    if json_only:
+        return 0 if ok else 1
 
     changed, missing = 0, 0
     for p in productos:

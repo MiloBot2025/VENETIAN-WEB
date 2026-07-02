@@ -4,12 +4,14 @@ import { ShoppingCart, Eye } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Product } from '@/types';
+import { useLivePrice } from '@/lib/live-prices';
 
 interface ProductCardProps {
   product: Product;
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
+  const price = useLivePrice(product.sku, product.price);
   return (
     <Link
       href={`/producto/${product.slug || product.documentId}`}
@@ -50,9 +52,9 @@ export default function ProductCard({ product }: ProductCardProps) {
         <p className="text-[11px] sm:text-xs text-gray-500 font-mono line-clamp-1">
           {product.title}
         </p>
-        {product.price > 0 && (
+        {price > 0 && (
           <p className="mt-1 text-sm sm:text-base font-semibold text-white">
-            ${Math.round(product.price).toLocaleString('es-AR')}
+            ${Math.round(price).toLocaleString('es-AR')}
             <span className="ml-1 text-[10px] font-normal text-gray-500">sugerido</span>
           </p>
         )}
