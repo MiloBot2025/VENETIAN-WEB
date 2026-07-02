@@ -49,39 +49,101 @@ SKU_OVERRIDES = {
 }
 
 
-def fetch_prices() -> dict[str, float]:
-    """Precio LOCAL-ML: tabla Precios (lista 7) con fallback a Articulos.PrecioAlternativo1
-    (Heaven guarda en uno u otro lado según cómo se cargó el precio)."""
+def _in_clause(cur, sql: str, prefix_params: tuple, ids: list[str]) -> list:
+    """Ejecuta un SELECT con `IDC IN (...)` troceando en lotes (evita el tope de
+    parámetros de SQL Server, ~2100). Devuelve todas las filas."""
+    rows: list = []
+    for i in range(0, len(ids), 1000):
+        chunk = ids[i:i + 1000]
+        ph = ",".join(["%s"] * len(chunk))
+        cur.execute(sql.format(ph=ph), (*prefix_params, *chunk))
+        rows.extend(cur.fetchall())
+    return rows
+
+
+def fetch_prices(needed: set[str] | None = None) -> dict[str, float]:
+    """Precio LOCAL-ML: `Articulos.PrecioAlternativo1` (autoritativo) con fallback a
+    `Precios` lista 7. Si `needed` viene, consulta SOLO esos IDCs (WHERE IDC IN ...) —
+    ~540 filas en vez de escanear las ~10.855 de la tabla completa."""
     conn = db_connect()
     try:
         cur = conn.cursor()
-        # Fallback: tabla Precios lista 7 (suele estar desactualizada / con duplicados)
+        if needed:
+            ids = list(needed)
+            prices = {
+                str(idc).strip(): float(p)
+                for idc, p in _in_clause(
+                    cur,
+                    "SELECT IDC_Articulo, Precio FROM Precios "
+                    "WHERE Id_ListaDePrecio = %s AND Id_Moneda = %s AND Precio > 0 "
+                    "AND IDC_Articulo IN ({ph})",
+                    (LISTA_LOCAL_ML, ID_MONEDA_ARS), ids,
+                )
+            }
+            for idc, p in _in_clause(
+                cur,
+                "SELECT IDC, PrecioAlternativo1 FROM Articulos "
+                "WHERE PrecioAlternativo1 > 0 AND IDC IN ({ph})",
+                (), ids,
+            ):
+                prices[str(idc).strip()] = float(p)
+
+            # Paquetes entre los pedidos (hoy 0): traer sus componentes y sumar.
+            paq_rows = _in_clause(
+                cur,
+                "SELECT IDC_Paquete, IDC_Componente, Cantidad FROM ArticulosPaquete "
+                "WHERE IDC_Paquete IN ({ph})",
+                (), ids,
+            )
+            if paq_rows:
+                comps_ids = [str(c).strip() for _, c, _ in paq_rows]
+                comp_prices = {
+                    str(idc).strip(): float(p)
+                    for idc, p in _in_clause(
+                        cur,
+                        "SELECT IDC, PrecioAlternativo1 FROM Articulos "
+                        "WHERE PrecioAlternativo1 > 0 AND IDC IN ({ph})",
+                        (), comps_ids,
+                    )
+                }
+                paquetes: dict[str, list[tuple[str, float]]] = {}
+                for paq, comp, cant in paq_rows:
+                    paquetes.setdefault(str(paq).strip(), []).append((str(comp).strip(), float(cant)))
+                for paq, comps in paquetes.items():
+                    if paq not in prices and all(c in comp_prices for c, _ in comps):
+                        prices[paq] = round(sum(comp_prices[c] * q for c, q in comps), 2)
+            return prices
+
+        # --- modo completo (sin filtro): comportamiento histórico ---
         cur.execute(
             "SELECT IDC_Articulo, Precio FROM Precios "
             "WHERE Id_ListaDePrecio = %s AND Id_Moneda = %s AND Precio > 0",
             (LISTA_LOCAL_ML, ID_MONEDA_ARS),
         )
         prices = {str(idc).strip(): float(p) for idc, p in cur.fetchall()}
-        # Fuente autoritativa: Articulos.PrecioAlternativo1 (lo que muestra Heaven)
-        cur.execute(
-            "SELECT IDC, PrecioAlternativo1 FROM Articulos WHERE PrecioAlternativo1 > 0"
-        )
+        cur.execute("SELECT IDC, PrecioAlternativo1 FROM Articulos WHERE PrecioAlternativo1 > 0")
         for idc, p in cur.fetchall():
             prices[str(idc).strip()] = float(p)
-
-        # Paquetes sin precio propio: SUM(componentes × cantidad)
         cur.execute("SELECT IDC_Paquete, IDC_Componente, Cantidad FROM ArticulosPaquete")
         paquetes: dict[str, list[tuple[str, float]]] = {}
         for paq, comp, cant in cur.fetchall():
             paquetes.setdefault(str(paq).strip(), []).append((str(comp).strip(), float(cant)))
         for paq, comps in paquetes.items():
-            if paq in prices:
-                continue
-            if all(c in prices for c, _ in comps):
+            if paq not in prices and all(c in prices for c, _ in comps):
                 prices[paq] = round(sum(prices[c] * q for c, q in comps), 2)
         return prices
     finally:
         conn.close()
+
+
+def needed_idcs(productos: list) -> set[str]:
+    """IDCs de Heaven a consultar = SKU web (resuelto por SKU_OVERRIDES) de cada producto."""
+    out: set[str] = set()
+    for p in productos:
+        sku = str(p.get("sku") or "").strip()
+        if sku:
+            out.add(SKU_OVERRIDES.get(sku, sku))
+    return out
 
 
 def build_live_map(prices: dict[str, float], productos: list) -> dict[str, float]:
@@ -113,11 +175,13 @@ def main() -> int:
     apply = "--apply" in sys.argv
     json_only = "--json-only" in sys.argv
 
-    prices = fetch_prices()
-    log(f"[web-prices] lista 7 (LOCAL-ML): {len(prices)} precios en Heaven")
-
     data = json.loads(DUMP.read_text(encoding="utf-8"))
     productos = data["productos"]
+
+    # Consultar SOLO los IDCs que la web usa (~540) en vez de escanear toda la tabla.
+    needed = needed_idcs(productos)
+    prices = fetch_prices(needed)
+    log(f"[web-prices] Heaven: {len(prices)}/{len(needed)} precios (consulta acotada a SKUs web)")
 
     # Camino SIN deploy: publicar el JSON en vivo al VPS en toda corrida.
     live = build_live_map(prices, productos)
