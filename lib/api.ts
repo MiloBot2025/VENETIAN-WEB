@@ -4,18 +4,28 @@ import imageManifest from './product-images.json';
 
 const IMAGE_MANIFEST = imageManifest as Record<string, string[]>;
 
+// minúsculas + sin diacríticos → búsqueda acento-insensible ("laser" ≡ "láser").
+function normalizeText(s: string): string {
+  return (s || '').normalize('NFD').replace(/\p{Diacritic}/gu, '').toLowerCase();
+}
+
 interface DumpProduct {
   id: string;
   documentId: string;
   title: string;
   subtitulo?: string;
-  slug: string;
+  slug: string;            // legacy SKU-style (ut-47con, agc0610) — se mantiene por compat
+  legacySlug?: string;     // alias explícito del slug viejo
+  seoSlug?: string;        // nuevo slug SEO descriptivo
   description: string;
   price: number;
   sku: string;
   modelo: string;
   categoryName: string;
   featured: boolean;
+  seoDescription?: string;
+  seoDescriptionLen?: number;
+  seoDescriptionSource?: string;
 }
 
 interface DumpCategory {
@@ -34,7 +44,9 @@ export interface Product {
   documentId: string;
   title: string;
   subtitulo?: string;
-  slug?: string;
+  slug?: string;          // slug canónico expuesto al frontend = seoSlug (o legacy fallback)
+  legacySlug?: string;
+  seoSlug?: string;
   description: string;
   price: number;
   categoryName: string;
@@ -44,6 +56,8 @@ export interface Product {
   featured?: boolean;
   image?: Media;
   images?: Media[];
+  seoDescription?: string;
+  seoDescriptionSource?: string;
 }
 
 export interface Category {
@@ -66,12 +80,16 @@ function imagesFor(sku: string): Media[] {
 
 function toProduct(p: DumpProduct): Product {
   const imgs = imagesFor(p.sku);
+  // El slug expuesto al frontend prefiere el seoSlug (descriptivo) sobre el legacy.
+  const canonicalSlug = p.seoSlug || p.slug;
   return {
     id: p.id,
     documentId: p.documentId,
     title: p.title,
     subtitulo: p.subtitulo,
-    slug: p.slug,
+    slug: canonicalSlug,
+    legacySlug: p.legacySlug || p.slug,
+    seoSlug: p.seoSlug,
     description: p.description,
     price: p.price,
     categoryName: p.categoryName,
@@ -81,6 +99,8 @@ function toProduct(p: DumpProduct): Product {
     images: imgs,
     specifications: {},
     featured: p.featured,
+    seoDescription: p.seoDescription,
+    seoDescriptionSource: p.seoDescriptionSource,
   };
 }
 
@@ -101,14 +121,19 @@ export async function fetchProducts(params?: {
     list = list.filter(p => p.categoryName?.toLowerCase() === cat);
   }
   if (params?.search) {
-    const q = params.search.toLowerCase();
-    list = list.filter(p =>
-      p.title?.toLowerCase().includes(q) ||
-      p.subtitulo?.toLowerCase().includes(q) ||
-      p.description?.toLowerCase().includes(q) ||
-      p.sku?.toLowerCase().includes(q) ||
-      p.modelo?.toLowerCase().includes(q)
-    );
+    // Normalizar: minúsculas + SIN acentos, para que "laser" matchee "Láser"
+    // y "microfono" matchee "Micrófono" (el usuario casi nunca escribe tildes).
+    const tokens = normalizeText(params.search).split(/\s+/).filter(Boolean);
+    if (tokens.length) {
+      list = list.filter(p => {
+        const blob = normalizeText(
+          [p.title, p.subtitulo, p.description, p.sku, p.modelo, p.categoryName]
+            .filter(Boolean).join(' ')
+        );
+        // Todas las palabras deben estar presentes (orden libre): "maquina humo" → "Máquina de humo".
+        return tokens.every(t => blob.includes(t));
+      });
+    }
   }
   if (params?.featured !== undefined) {
     list = list.filter(p => p.featured === params.featured);
@@ -135,11 +160,13 @@ export async function fetchProducts(params?: {
 }
 
 export async function fetchProduct(identifier: string): Promise<Product> {
-  const id = identifier.toLowerCase();
+  const raw = decodeURIComponent(identifier || '').toLowerCase();
   const found = PRODUCTOS.find(p =>
-    p.slug?.toLowerCase() === id ||
-    p.sku?.toLowerCase() === id ||
-    p.documentId?.toLowerCase() === id
+    p.seoSlug?.toLowerCase() === raw ||
+    p.slug?.toLowerCase() === raw ||
+    p.legacySlug?.toLowerCase() === raw ||
+    p.sku?.toLowerCase() === raw ||
+    p.documentId?.toLowerCase() === raw
   );
   if (!found) throw new Error(`Producto "${identifier}" no encontrado`);
   return toProduct(found);
