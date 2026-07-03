@@ -50,31 +50,40 @@ function CatalogoInner({ initialCategory }: { initialCategory?: string }) {
   // No resetear la página en el primer render (respetar la página venida de la URL).
   const firstResetRef = useRef(true);
 
-  // Adoptar ?q= cuando llega por navegación externa (ej: búsqueda desde el Header
-  // estando ya en /catalogo — el componente no se remonta y el useState inicial no alcanza).
-  // Si coincide con searchQuery o con el debounced, el cambio de URL lo escribimos nosotros
-  // (efecto espejo de abajo) y no hay que tocar nada.
+  // Adoptar ?q= y ?categoria= cuando llegan por navegación externa (ej: búsqueda desde
+  // el Header estando ya en /catalogo — el componente no se remonta y el useState inicial
+  // no alcanza). Si coinciden con el estado actual (o con el debounced, para q), el cambio
+  // de URL lo escribimos nosotros (efecto espejo de abajo) y no hay que tocar nada.
+  // Nota: una búsqueda del Header llega SIN categoria → resetea a 'all' (buscar en todo).
   useEffect(() => {
     const urlQ = searchParams.get('q') || '';
     setSearchQuery((current) => {
       if (urlQ === current || urlQ === debouncedSearchQuery) return current;
       return urlQ;
     });
+    // Solo en /catalogo general: en las páginas /catalogo/[categoria] el espejo no puede
+    // representar 'all' en la URL y esto haría snap-back a la categoría de la página.
+    if (!initialCategory) {
+      const urlCat = searchParams.get('categoria') || 'all';
+      setSelectedCategory((current) => (urlCat === current ? current : urlCat));
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);
 
-  // Cargar categorías una sola vez
+  // Cargar categorías como FACETAS de la búsqueda activa: los counts son
+  // "resultados de esta búsqueda por categoría", así elegir una categoría
+  // nunca combina en vacío sin avisar.
   useEffect(() => {
     async function loadCategories() {
       try {
-        const categoriesData = await fetchCategories();
+        const categoriesData = await fetchCategories(debouncedSearchQuery || undefined);
         setAllCategories(categoriesData);
       } catch (error) {
         console.error('Error loading categories:', error);
       }
     }
     loadCategories();
-  }, []);
+  }, [debouncedSearchQuery]);
 
   // Cargar productos cuando cambian los filtros o la página
   useEffect(() => {
@@ -127,6 +136,16 @@ function CatalogoInner({ initialCategory }: { initialCategory?: string }) {
 
   const maxPrice = 5000000;
   const minPrice = 0;
+
+  // Con búsqueda activa, ocultar categorías sin resultados (salvo la seleccionada,
+  // que se muestra con su count real para que el filtro activo nunca "desaparezca").
+  const visibleCategories = allCategories.filter(
+    (cat) => cat.productCount > 0 || cat.slug === selectedCategory
+  );
+  const selectedCategoryName =
+    allCategories.find((c) => c.slug === selectedCategory)?.name || selectedCategory;
+  const hasActiveSearch = Boolean(debouncedSearchQuery.trim());
+  const hasActiveCategory = selectedCategory !== 'all';
 
   const clearFilters = () => {
     setSelectedCategory("all");
@@ -224,7 +243,7 @@ function CatalogoInner({ initialCategory }: { initialCategory?: string }) {
                   >
                     Todas las categorías
                   </button>
-                   {allCategories.map((cat) => (
+                   {visibleCategories.map((cat) => (
                     <button
                       key={cat.slug}
                       onClick={() => { setSelectedCategory(cat.slug); setFiltersOpen(false); }}
@@ -249,6 +268,34 @@ function CatalogoInner({ initialCategory }: { initialCategory?: string }) {
 
           {/* Contenido principal */}
           <main className="flex-1">
+            {/* Chips de filtros activos — siempre visible QUÉ está filtrando y cómo sacarlo */}
+            {(hasActiveSearch || hasActiveCategory) && (
+              <div className="flex flex-wrap items-center gap-2 mb-4">
+                <span className="text-xs text-gray-500 uppercase tracking-wide">Filtros:</span>
+                {hasActiveSearch && (
+                  <button
+                    onClick={() => setSearchQuery('')}
+                    className="inline-flex items-center gap-1.5 rounded-full bg-blue-600/20 border border-blue-500/40 px-3 py-1 text-sm text-blue-300 hover:bg-blue-600/30"
+                    title="Quitar búsqueda"
+                  >
+                    <Search className="h-3 w-3" />
+                    “{debouncedSearchQuery}”
+                    <X className="h-3.5 w-3.5" />
+                  </button>
+                )}
+                {hasActiveCategory && (
+                  <button
+                    onClick={() => setSelectedCategory('all')}
+                    className="inline-flex items-center gap-1.5 rounded-full bg-gray-800 border border-gray-700 px-3 py-1 text-sm text-gray-300 hover:bg-gray-700 capitalize"
+                    title="Quitar categoría"
+                  >
+                    {selectedCategoryName}
+                    <X className="h-3.5 w-3.5" />
+                  </button>
+                )}
+              </div>
+            )}
+
             {/* Estadísticas */}
             <div className="flex flex-col sm:flex-row items-center justify-between mb-6 gap-4">
               <p className="text-gray-400">
@@ -304,14 +351,38 @@ function CatalogoInner({ initialCategory }: { initialCategory?: string }) {
                 </div>
                 <h3 className="text-xl font-semibold text-white mb-2">No se encontraron productos</h3>
                 <p className="text-gray-400 max-w-md mx-auto">
-                  Intenta con otros filtros o términos de búsqueda.
+                  {hasActiveSearch && hasActiveCategory ? (
+                    <>No hay resultados para <span className="text-white">“{debouncedSearchQuery}”</span> en <span className="text-white capitalize">{selectedCategoryName}</span>.</>
+                  ) : hasActiveSearch ? (
+                    <>No hay resultados para <span className="text-white">“{debouncedSearchQuery}”</span>. Probá con menos palabras o revisá la ortografía.</>
+                  ) : (
+                    <>Intenta con otros filtros o términos de búsqueda.</>
+                  )}
                 </p>
-                <button
-                  onClick={clearFilters}
-                  className="mt-6 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-2 text-sm font-semibold text-white"
-                >
-                  Limpiar filtros
-                </button>
+                <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+                  {hasActiveSearch && hasActiveCategory && (
+                    <button
+                      onClick={() => setSelectedCategory('all')}
+                      className="rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-2 text-sm font-semibold text-white"
+                    >
+                      Buscar “{debouncedSearchQuery}” en todas las categorías
+                    </button>
+                  )}
+                  {hasActiveSearch && (
+                    <button
+                      onClick={() => setSearchQuery('')}
+                      className="rounded-lg border border-gray-700 px-6 py-2 text-sm font-semibold text-gray-300 hover:text-white hover:bg-gray-900"
+                    >
+                      Quitar búsqueda
+                    </button>
+                  )}
+                  <button
+                    onClick={clearFilters}
+                    className={`rounded-lg px-6 py-2 text-sm font-semibold ${hasActiveSearch ? 'border border-gray-700 text-gray-300 hover:text-white hover:bg-gray-900' : 'bg-gradient-to-r from-blue-600 to-purple-600 text-white'}`}
+                  >
+                    Limpiar filtros
+                  </button>
+                </div>
               </div>
             ) : viewMode === 'grid' ? (
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-5">

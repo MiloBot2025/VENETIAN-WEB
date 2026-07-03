@@ -68,6 +68,23 @@ export interface Category {
   productCount: number;
 }
 
+// Normalizar: minúsculas + SIN acentos, para que "laser" matchee "Láser"
+// y "microfono" matchee "Micrófono" (el usuario casi nunca escribe tildes).
+// Todas las palabras deben estar presentes (orden libre): "maquina humo" → "Máquina de humo".
+function matchesSearch(p: DumpProduct, search: string): boolean {
+  const tokens = normalizeText(search).split(/\s+/).filter(Boolean);
+  if (!tokens.length) return true;
+  const blob = normalizeText(
+    [p.title, p.subtitulo, p.description, p.sku, p.modelo, p.categoryName]
+      .filter(Boolean).join(' ')
+  );
+  return tokens.every(t => blob.includes(t));
+}
+
+function categoryMatchesSlug(p: DumpProduct, slug: string): boolean {
+  return p.categoryName?.toLowerCase() === slug.replace(/-/g, ' ').toLowerCase();
+}
+
 function imagesFor(sku: string): Media[] {
   const paths = IMAGE_MANIFEST[sku];
   if (!paths || !paths.length) return [];
@@ -117,23 +134,10 @@ export async function fetchProducts(params?: {
   let list = PRODUCTOS.slice();
 
   if (params?.category) {
-    const cat = params.category.replace(/-/g, ' ').toLowerCase();
-    list = list.filter(p => p.categoryName?.toLowerCase() === cat);
+    list = list.filter(p => categoryMatchesSlug(p, params.category!));
   }
   if (params?.search) {
-    // Normalizar: minúsculas + SIN acentos, para que "laser" matchee "Láser"
-    // y "microfono" matchee "Micrófono" (el usuario casi nunca escribe tildes).
-    const tokens = normalizeText(params.search).split(/\s+/).filter(Boolean);
-    if (tokens.length) {
-      list = list.filter(p => {
-        const blob = normalizeText(
-          [p.title, p.subtitulo, p.description, p.sku, p.modelo, p.categoryName]
-            .filter(Boolean).join(' ')
-        );
-        // Todas las palabras deben estar presentes (orden libre): "maquina humo" → "Máquina de humo".
-        return tokens.every(t => blob.includes(t));
-      });
-    }
+    list = list.filter(p => matchesSearch(p, params.search!));
   }
   if (params?.featured !== undefined) {
     list = list.filter(p => p.featured === params.featured);
@@ -172,8 +176,18 @@ export async function fetchProduct(identifier: string): Promise<Product> {
   return toProduct(found);
 }
 
-export async function fetchCategories(): Promise<Category[]> {
-  return CATEGORIAS.filter(c => c.productCount > 0).sort((a, b) => a.name.localeCompare(b.name));
+// Sin search: categorías con su total. Con search: los counts pasan a ser
+// "cuántos resultados de esta búsqueda hay en cada categoría" (facetas), incluyendo
+// las que quedan en 0 — el caller decide si las oculta o las muestra apagadas.
+export async function fetchCategories(search?: string): Promise<Category[]> {
+  const base = CATEGORIAS.filter(c => c.productCount > 0);
+  const withCounts = (search && search.trim())
+    ? base.map(c => ({
+        ...c,
+        productCount: PRODUCTOS.filter(p => categoryMatchesSlug(p, c.slug) && matchesSearch(p, search)).length,
+      }))
+    : base;
+  return withCounts.sort((a, b) => a.name.localeCompare(b.name));
 }
 
 export async function fetchFeaturedProducts(count: number = 6): Promise<Product[]> {
