@@ -70,20 +70,18 @@ function CatalogoInner({ initialCategory }: { initialCategory?: string }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);
 
-  // Cargar categorías como FACETAS de la búsqueda activa: los counts son
-  // "resultados de esta búsqueda por categoría", así elegir una categoría
-  // nunca combina en vacío sin avisar.
+  // Cargar categorías una sola vez (siempre la lista completa con sus totales).
   useEffect(() => {
     async function loadCategories() {
       try {
-        const categoriesData = await fetchCategories(debouncedSearchQuery || undefined);
+        const categoriesData = await fetchCategories();
         setAllCategories(categoriesData);
       } catch (error) {
         console.error('Error loading categories:', error);
       }
     }
     loadCategories();
-  }, [debouncedSearchQuery]);
+  }, []);
 
   // Cargar productos cuando cambian los filtros o la página
   useEffect(() => {
@@ -137,11 +135,22 @@ function CatalogoInner({ initialCategory }: { initialCategory?: string }) {
   const maxPrice = 5000000;
   const minPrice = 0;
 
-  // Con búsqueda activa, ocultar categorías sin resultados (salvo la seleccionada,
-  // que se muestra con su count real para que el filtro activo nunca "desaparezca").
-  const visibleCategories = allCategories.filter(
-    (cat) => cat.productCount > 0 || cat.slug === selectedCategory
-  );
+  // Búsqueda y categoría son MODOS EXCLUYENTES (modelo clásico de e-commerce):
+  // buscar resetea la categoría; elegir categoría limpia la búsqueda.
+  function applySearch(value: string) {
+    setSearchQuery(value);
+    // En /catalogo/[categoria] la URL ES la categoría — ahí se busca adentro.
+    if (value.trim() && !initialCategory && selectedCategory !== 'all') {
+      setSelectedCategory('all');
+    }
+  }
+
+  function applyCategory(slug: string) {
+    setSelectedCategory(slug);
+    setSearchQuery('');
+    setFiltersOpen(false);
+  }
+
   const selectedCategoryName =
     allCategories.find((c) => c.slug === selectedCategory)?.name || selectedCategory;
   const hasActiveSearch = Boolean(debouncedSearchQuery.trim());
@@ -175,7 +184,7 @@ function CatalogoInner({ initialCategory }: { initialCategory?: string }) {
                   placeholder="Buscar por nombre, SKU o descripción..."
                   className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-800 bg-gray-900 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onChange={(e) => applySearch(e.target.value)}
                 />
                 {searchQuery && (
                   <button
@@ -238,15 +247,15 @@ function CatalogoInner({ initialCategory }: { initialCategory?: string }) {
                 <h3 className="text-sm font-semibold text-white mb-3">Categorías</h3>
                  <div className="space-y-1 max-h-[60vh] lg:max-h-[400px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-900">
                   <button
-                    onClick={() => { setSelectedCategory('all'); setFiltersOpen(false); }}
+                    onClick={() => applyCategory('all')}
                     className={`w-full text-left px-3 py-2 rounded-lg text-sm ${selectedCategory === 'all' ? 'bg-gray-800 text-white' : 'text-gray-400 hover:text-white hover:bg-gray-900'}`}
                   >
                     Todas las categorías
                   </button>
-                   {visibleCategories.map((cat) => (
+                   {allCategories.map((cat) => (
                     <button
                       key={cat.slug}
-                      onClick={() => { setSelectedCategory(cat.slug); setFiltersOpen(false); }}
+                      onClick={() => applyCategory(cat.slug)}
                       className={`w-full text-left px-3 py-2 rounded-lg text-sm capitalize ${selectedCategory === cat.slug ? 'bg-gray-800 text-white' : 'text-gray-400 hover:text-white hover:bg-gray-900'}`}
                     >
                       {cat.name}
