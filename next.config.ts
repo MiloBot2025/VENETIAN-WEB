@@ -18,6 +18,9 @@ const nextConfig: NextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
+    // Comportamiento heredado del next.config.js viejo (que tenía prioridad sobre este
+    // archivo hasta 2026-07-03): servir imágenes sin el optimizador de Vercel.
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',

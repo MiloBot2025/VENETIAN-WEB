@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import { redirect } from 'next/navigation';
 import CatalogoClient from './CatalogoClient';
 
 const SITE_URL = 'https://venetian.com.ar';
@@ -18,19 +17,9 @@ export const metadata: Metadata = {
   },
 };
 
-type SearchParams = { categoria?: string; search?: string };
-
-export default async function CatalogoPage({
-  searchParams,
-}: { searchParams: Promise<SearchParams> }) {
-  const sp = await searchParams;
-  // Fase SEO: si llega /catalogo?categoria=X → 301 a /catalogo/X (path-based, indexable).
-  // Resuelve las 29 URLs "Página alternativa con etiqueta canónica adecuada" de GSC.
-  if (sp?.categoria && typeof sp.categoria === 'string') {
-    const slug = sp.categoria.trim().toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
-    if (slug) {
-      redirect(`/catalogo/${slug}`);
-    }
-  }
+// El redirect /catalogo?categoria=X → /catalogo/X vive en next.config.ts (redirects,
+// resuelto en el edge). No leer searchParams acá: mantiene la página ESTÁTICA (CDN),
+// que es lo que hace instantánea la navegación de la búsqueda del header.
+export default function CatalogoPage() {
   return <CatalogoClient />;
 }

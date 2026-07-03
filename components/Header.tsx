@@ -36,10 +36,13 @@ export default function Header() {
 
   useEffect(() => {
     if (searchOpen) {
+      // Precalentar el destino de la búsqueda mientras el usuario tipea
+      // (router.push no prefetchea solo, a diferencia de <Link>).
+      router.prefetch('/catalogo');
       // Pequeño defer para que la animación termine y haga focus en el input
       setTimeout(() => searchInputRef.current?.focus(), 50);
     }
-  }, [searchOpen]);
+  }, [searchOpen, router]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
