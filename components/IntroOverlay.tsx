@@ -2,25 +2,22 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 
 export default function IntroOverlay() {
   const [show, setShow] = useState(false);
   const [started, setStarted] = useState(false);
   const [fadingOut, setFadingOut] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const pathname = usePathname();
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    const TWENTY_FOUR_HS = 24 * 60 * 60 * 1000;
-    const lastReset = parseInt(localStorage.getItem('intro_window_start') || '0', 10);
-    let count = parseInt(localStorage.getItem('intro_count') || '0', 10);
-    if (!lastReset || Date.now() - lastReset > TWENTY_FOUR_HS) {
-      // Nuevo período de 24h
-      localStorage.setItem('intro_window_start', String(Date.now()));
-      localStorage.setItem('intro_count', '0');
-      count = 0;
-    }
-    if (count >= 2) return;
+    if (pathname?.startsWith('/demo-glass')) return; // demo sin intro
+    const SEVENTY_TWO_HS = 72 * 60 * 60 * 1000;
+    const lastShown = parseInt(localStorage.getItem('intro_last_shown') || '0', 10);
+    if (lastShown && Date.now() - lastShown < SEVENTY_TWO_HS) return;
+    localStorage.setItem('intro_last_shown', String(Date.now()));
     setShow(true);
   }, []);
 
@@ -40,8 +37,6 @@ export default function IntroOverlay() {
   function dismiss() {
     if (fadingOut) return;
     setFadingOut(true);
-    const count = parseInt(localStorage.getItem('intro_count') || '0', 10);
-    localStorage.setItem('intro_count', String(count + 1));
     setTimeout(() => setShow(false), 600);
   }
 
