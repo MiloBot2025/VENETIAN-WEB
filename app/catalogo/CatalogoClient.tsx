@@ -50,6 +50,19 @@ function CatalogoInner({ initialCategory }: { initialCategory?: string }) {
   // No resetear la página en el primer render (respetar la página venida de la URL).
   const firstResetRef = useRef(true);
 
+  // Adoptar ?q= cuando llega por navegación externa (ej: búsqueda desde el Header
+  // estando ya en /catalogo — el componente no se remonta y el useState inicial no alcanza).
+  // Si coincide con searchQuery o con el debounced, el cambio de URL lo escribimos nosotros
+  // (efecto espejo de abajo) y no hay que tocar nada.
+  useEffect(() => {
+    const urlQ = searchParams.get('q') || '';
+    setSearchQuery((current) => {
+      if (urlQ === current || urlQ === debouncedSearchQuery) return current;
+      return urlQ;
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
+
   // Cargar categorías una sola vez
   useEffect(() => {
     async function loadCategories() {

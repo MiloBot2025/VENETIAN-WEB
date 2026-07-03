@@ -2,26 +2,72 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { ShoppingCart, Search, Menu, X } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { ShoppingCart, Search, Menu, X, Loader } from 'lucide-react';
+import { useState, useEffect, useRef, useTransition, FormEvent } from 'react';
 import { createPortal } from 'react-dom';
 import { useCart } from '@/lib/context/CartContext';
 
+// Nota: estas son "agrupaciones" virtuales (audio/iluminacion/efectos/cables) que NO
+// se corresponden 1-a-1 con slugs reales de categoría. Apuntamos al catálogo plano.
+// Los slugs reales (microfono, consola-de-audio, etc.) están en el listado de Categorías
+// dentro de la página /catalogo y en el home (app/page.tsx).
 const categories = [
-  { name: 'Audio Profesional', href: '/catalogo?categoria=audio' },
-  { name: 'Iluminación', href: '/catalogo?categoria=iluminacion' },
-  { name: 'Efectos Especiales', href: '/catalogo?categoria=efectos' },
-  { name: 'Cables & Conectores', href: '/catalogo?categoria=cables' },
+  { name: 'Audio Profesional', href: '/catalogo' },
+  { name: 'Iluminación', href: '/catalogo' },
+  { name: 'Efectos Especiales', href: '/catalogo' },
+  { name: 'Cables & Conectores', href: '/catalogo' },
 ];
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const [isPending, startTransition] = useTransition();
+  const wasPendingRef = useRef(false);
+  const router = useRouter();
   const { totalItems, setIsCartOpen } = useCart();
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  useEffect(() => {
+    if (searchOpen) {
+      // Pequeño defer para que la animación termine y haga focus en el input
+      setTimeout(() => searchInputRef.current?.focus(), 50);
+    }
+  }, [searchOpen]);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && searchOpen) setSearchOpen(false);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [searchOpen]);
+
+  // Cerrar la barra recién cuando la navegación de la búsqueda terminó —
+  // mientras tanto queda abierta con spinner (acuse de recibo).
+  useEffect(() => {
+    if (wasPendingRef.current && !isPending) {
+      setSearchOpen(false);
+      setSearchQuery('');
+      setMobileMenuOpen(false);
+    }
+    wasPendingRef.current = isPending;
+  }, [isPending]);
+
+  function handleSearchSubmit(e: FormEvent) {
+    e.preventDefault();
+    const q = searchQuery.trim();
+    if (!q || isPending) return;
+    startTransition(() => {
+      router.push(`/catalogo?q=${encodeURIComponent(q)}`);
+    });
+  }
 
   const mobileMenuJSX = (
     <>
@@ -151,6 +197,35 @@ export default function Header() {
   return (
     <>
       <header className="sticky top-0 z-50 w-full border-b border-gray-800 bg-black/95 backdrop-blur supports-[backdrop-filter]:bg-black/60">
+        {searchOpen && (
+          <div className="absolute inset-x-0 top-0 z-[60] bg-black border-b border-gray-800 px-4 py-3 sm:px-6 lg:px-8 animate-in slide-in-from-top duration-200">
+            <form onSubmit={handleSearchSubmit} className="mx-auto flex max-w-7xl items-center gap-3">
+              {isPending ? (
+                <Loader className="h-5 w-5 text-blue-500 shrink-0 animate-spin" aria-hidden="true" />
+              ) : (
+                <Search className="h-5 w-5 text-gray-400 shrink-0" aria-hidden="true" />
+              )}
+              <input
+                ref={searchInputRef}
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Buscar productos, SKU o categoría…"
+                className={`flex-1 bg-transparent text-base sm:text-sm text-white placeholder-gray-500 outline-none border-0 ${isPending ? 'opacity-60' : ''}`}
+                readOnly={isPending}
+                aria-label="Buscar productos"
+              />
+              <button
+                type="button"
+                onClick={() => { setSearchOpen(false); setSearchQuery(''); }}
+                className="-m-2 p-2 text-gray-400 hover:text-white"
+                aria-label="Cerrar búsqueda"
+              >
+                <X className="h-5 w-5" aria-hidden="true" />
+              </button>
+            </form>
+          </div>
+        )}
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8" aria-label="Global">
           <div className="flex lg:flex-1">
             <Link href="/" className="-m-1.5 p-1.5">
@@ -166,13 +241,14 @@ export default function Header() {
             </Link>
           </div>
           <div className="flex lg:hidden items-center gap-1">
-            <Link
-              href="/catalogo"
+            <button
+              type="button"
+              onClick={() => setSearchOpen(true)}
               className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-400 hover:text-white"
               aria-label="Buscar"
             >
               <Search className="h-6 w-6" aria-hidden="true" />
-            </Link>
+            </button>
             <button
               type="button"
               className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-400"
@@ -228,9 +304,14 @@ export default function Header() {
             </Link>
           </div>
           <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-x-6">
-            <Link href="/catalogo" className="p-2 text-gray-400 hover:text-white" aria-label="Buscar">
+            <button
+              type="button"
+              onClick={() => setSearchOpen(true)}
+              className="p-2 text-gray-400 hover:text-white"
+              aria-label="Buscar"
+            >
               <Search className="h-5 w-5" />
-            </Link>
+            </button>
             <div className="hidden">
               <button
                 className="p-2 text-gray-400 hover:text-white relative"
