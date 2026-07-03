@@ -61,12 +61,6 @@ function CatalogoInner({ initialCategory }: { initialCategory?: string }) {
       if (urlQ === current || urlQ === debouncedSearchQuery) return current;
       return urlQ;
     });
-    // Solo en /catalogo general: en las páginas /catalogo/[categoria] el espejo no puede
-    // representar 'all' en la URL y esto haría snap-back a la categoría de la página.
-    if (!initialCategory) {
-      const urlCat = searchParams.get('categoria') || 'all';
-      setSelectedCategory((current) => (urlCat === current ? current : urlCat));
-    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);
 
@@ -123,7 +117,8 @@ function CatalogoInner({ initialCategory }: { initialCategory?: string }) {
   // replace (no push) para no llenar el historial con cada tecla/filtro.
   useEffect(() => {
     const params = new URLSearchParams();
-    if (selectedCategory !== 'all' && selectedCategory !== initialCategory) params.set('categoria', selectedCategory);
+    // La categoría NO va como query param: es un PATH (/catalogo/<slug>, links del
+    // sidebar). Un ?categoria= acá dispararía el 308 del next.config y arrastraría el q.
     if (debouncedSearchQuery) params.set('q', debouncedSearchQuery);
     if (sortBy !== 'relevance') params.set('sort', sortBy);
     if (currentPage > 1) params.set('page', String(currentPage));
@@ -135,28 +130,18 @@ function CatalogoInner({ initialCategory }: { initialCategory?: string }) {
   const maxPrice = 5000000;
   const minPrice = 0;
 
-  // Búsqueda y categoría son MODOS EXCLUYENTES (modelo clásico de e-commerce):
-  // buscar resetea la categoría; elegir categoría limpia la búsqueda.
-  function applySearch(value: string) {
-    setSearchQuery(value);
-    // En /catalogo/[categoria] la URL ES la categoría — ahí se busca adentro.
-    if (value.trim() && !initialCategory && selectedCategory !== 'all') {
-      setSelectedCategory('all');
-    }
-  }
-
-  function applyCategory(slug: string) {
-    setSelectedCategory(slug);
-    setSearchQuery('');
-    setFiltersOpen(false);
-  }
-
   const selectedCategoryName =
     allCategories.find((c) => c.slug === selectedCategory)?.name || selectedCategory;
   const hasActiveSearch = Boolean(debouncedSearchQuery.trim());
   const hasActiveCategory = selectedCategory !== 'all';
 
   const clearFilters = () => {
+    // En una página de categoría, "limpiar" = volver al catálogo completo (la
+    // categoría vive en el path, no se puede desactivar sin navegar).
+    if (initialCategory) {
+      router.push('/catalogo');
+      return;
+    }
     setSelectedCategory("all");
     setSearchQuery("");
     setPriceRange([minPrice, maxPrice]);
@@ -184,7 +169,7 @@ function CatalogoInner({ initialCategory }: { initialCategory?: string }) {
                   placeholder="Buscar por nombre, SKU o descripción..."
                   className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-800 bg-gray-900 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   value={searchQuery}
-                  onChange={(e) => applySearch(e.target.value)}
+                  onChange={(e) => setSearchQuery(e.target.value)}
                 />
                 {searchQuery && (
                   <button
@@ -246,21 +231,23 @@ function CatalogoInner({ initialCategory }: { initialCategory?: string }) {
               <div className="border border-gray-800 rounded-xl p-4">
                 <h3 className="text-sm font-semibold text-white mb-3">Categorías</h3>
                  <div className="space-y-1 max-h-[60vh] lg:max-h-[400px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-900">
-                  <button
-                    onClick={() => applyCategory('all')}
-                    className={`w-full text-left px-3 py-2 rounded-lg text-sm ${selectedCategory === 'all' ? 'bg-gray-800 text-white' : 'text-gray-400 hover:text-white hover:bg-gray-900'}`}
+                  <Link
+                    href="/catalogo"
+                    onClick={() => setFiltersOpen(false)}
+                    className={`block w-full text-left px-3 py-2 rounded-lg text-sm ${selectedCategory === 'all' ? 'bg-gray-800 text-white' : 'text-gray-400 hover:text-white hover:bg-gray-900'}`}
                   >
                     Todas las categorías
-                  </button>
+                  </Link>
                    {allCategories.map((cat) => (
-                    <button
+                    <Link
                       key={cat.slug}
-                      onClick={() => applyCategory(cat.slug)}
-                      className={`w-full text-left px-3 py-2 rounded-lg text-sm capitalize ${selectedCategory === cat.slug ? 'bg-gray-800 text-white' : 'text-gray-400 hover:text-white hover:bg-gray-900'}`}
+                      href={`/catalogo/${cat.slug}`}
+                      onClick={() => setFiltersOpen(false)}
+                      className={`block w-full text-left px-3 py-2 rounded-lg text-sm capitalize ${selectedCategory === cat.slug ? 'bg-gray-800 text-white' : 'text-gray-400 hover:text-white hover:bg-gray-900'}`}
                     >
                       {cat.name}
                       <span className="float-right text-gray-500 normal-case">{cat.productCount}</span>
-                    </button>
+                    </Link>
                   ))}
                 </div>
               </div>
@@ -293,14 +280,14 @@ function CatalogoInner({ initialCategory }: { initialCategory?: string }) {
                   </button>
                 )}
                 {hasActiveCategory && (
-                  <button
-                    onClick={() => setSelectedCategory('all')}
+                  <Link
+                    href="/catalogo"
                     className="inline-flex items-center gap-1.5 rounded-full bg-gray-800 border border-gray-700 px-3 py-1 text-sm text-gray-300 hover:bg-gray-700 capitalize"
                     title="Quitar categoría"
                   >
                     {selectedCategoryName}
                     <X className="h-3.5 w-3.5" />
-                  </button>
+                  </Link>
                 )}
               </div>
             )}
@@ -370,12 +357,12 @@ function CatalogoInner({ initialCategory }: { initialCategory?: string }) {
                 </p>
                 <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
                   {hasActiveSearch && hasActiveCategory && (
-                    <button
-                      onClick={() => setSelectedCategory('all')}
+                    <Link
+                      href={`/catalogo?q=${encodeURIComponent(debouncedSearchQuery)}`}
                       className="rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-2 text-sm font-semibold text-white"
                     >
                       Buscar “{debouncedSearchQuery}” en todas las categorías
-                    </button>
+                    </Link>
                   )}
                   {hasActiveSearch && (
                     <button
