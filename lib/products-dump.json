@@ -2583,7 +2583,7 @@
    "subtitulo": "Consola Mixer 6 Canales USB",
    "slug": "bv6",
    "description": "Venetian Bv6 es una consola mezcladora de 6 canales con interfaz de audio USB integrada. Cuenta con phantom power de 48V para micrófonos de condensador, ecualización de agudos y graves, y un reproductor de MP3 incorporado. Su conexión USB permite alimentación y transmisión de audio directa a la PC, ideal para producción casera y streaming en vivo.",
-   "price": 154392.98,
+   "price": 131578.95,
    "sku": "2101131720501531",
    "modelo": "BV6",
    "categoryName": "consola de audio",
@@ -7767,7 +7767,7 @@
    "subtitulo": "Consola Mixer USB 4 Canales",
    "slug": "bv4",
    "description": "Venetian BV4 es una consola mezcladora de 4 canales con interfaz de audio USB integrada. Cuenta con phantom power de 48V para micrófonos de condensador, ecualización de graves y agudos, y un reproductor MP3 incorporado. Su conexión USB permite usarla como placa de sonido para PC, ideal para grabación casera, producción musical y transmisiones en vivo.",
-   "price": 119436.08,
+   "price": 104210.53,
    "sku": "2101131714301107",
    "modelo": "BV4",
    "categoryName": "consola de audio",
@@ -9953,5 +9953,5 @@
   }
  ],
  "slugMigratedAt": "2026-05-12T20:28:40.773Z",
- "pricesUpdatedAt": "2026-07-02T10:00:06"
+ "pricesUpdatedAt": "2026-07-09T10:00:27"
 }
