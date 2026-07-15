@@ -9027,7 +9027,7 @@
    "subtitulo": "Aro de Luz LED para Video",
    "slug": "l01",
    "description": "Venetian L01 es un aro de luz LED profesional de 16 cm, ideal para streaming y producción de video. Ofrece tres tonalidades ajustables (cálido, neutro, frío) con un rango de temperatura de color de 2200K a 12000K y una potencia luminosa de hasta 780 lúmenes. Su diseño incluye un agarre para soporte y se alimenta mediante cable USB incluido, proporcionando una iluminación uniforme y versátil.",
-   "price": 21056.0,
+   "price": 12746.12,
    "sku": "2010011206093232",
    "modelo": "L01",
    "categoryName": "lampara",
@@ -9953,5 +9953,5 @@
   }
  ],
  "slugMigratedAt": "2026-05-12T20:28:40.773Z",
- "pricesUpdatedAt": "2026-07-14T10:00:10"
+ "pricesUpdatedAt": "2026-07-15T10:00:10"
 }
