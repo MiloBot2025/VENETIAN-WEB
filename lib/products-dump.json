@@ -5085,7 +5085,7 @@
    "subtitulo": "Soporte para Teléfono y Tablet",
    "slug": "mp-1",
    "description": "Venetian MP-1 es un soporte versátil diseñado para sujetar teléfonos móviles y tablets de forma segura, con un ajuste que abarca dispositivos de 52 mm a 110 mm de ancho. Su construcción robusta lo hace ideal para integrar dispositivos móviles en configuraciones de audio profesional, como complemento para micrófonos o en estaciones de control.",
-   "price": 22000.0,
+   "price": 24900.0,
    "sku": "1911081331326571",
    "modelo": "MP-1",
    "categoryName": "soporte",
@@ -8541,7 +8541,7 @@
    "subtitulo": "Efecto LED de Gobo 8 Colores",
    "slug": "spg008",
    "description": "Venetian SPG 008 es un efecto LED potente que proyecta 8 gobos coloridos mediante 8 LEDs CREE de 3W en RGBW. Se controla por DMX (7 canales), con modos automático, master/slave y activación por sonido, ofreciendo dimmer lineal y efecto estroboscópico. Su construcción robusta lo hace apto para uso profesional en eventos y espectáculos.",
-   "price": 180000.0,
+   "price": 149000.0,
    "sku": "1911201232449449",
    "modelo": "SPG008",
    "categoryName": "efecto de luces",
@@ -9953,5 +9953,5 @@
   }
  ],
  "slugMigratedAt": "2026-05-12T20:28:40.773Z",
- "pricesUpdatedAt": "2026-07-15T10:00:10"
+ "pricesUpdatedAt": "2026-07-24T10:00:14"
 }
