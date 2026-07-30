@@ -1,6 +1,6 @@
 {
  "generatedAt": "2026-04-27T03:57:52.159Z",
- "totalProducts": 539,
+ "totalProducts": 540,
  "productos": [
   {
    "id": "347",
@@ -8037,7 +8037,7 @@
    "subtitulo": "Láser RGB 600mW DMX",
    "slug": "vt-600rgb",
    "description": "Venetian VT-600RGB es un láser RGB de 600mW de potencia total, ideal para crear efectos visuales dinámicos en eventos y fiestas. Se controla mediante DMX, posee modos automático y audiorítmico, y cuenta con un sistema de refrigeración por ventilador para un funcionamiento estable.",
-   "price": 195000,
+   "price": 165000.0,
    "sku": "2311011619392007",
    "modelo": "VT-600RGB",
    "categoryName": "laser",
@@ -9703,6 +9703,24 @@
    "seoDescription": "<p><strong>VT-C001HB — Bañador LED Frío/Cálido de Alta Potencia</strong></p>\n\n<p>El VT-C001HB es un bañador LED profesional diseñado para integradores, técnicos de eventos, DJs y espacios con demanda constante de iluminación versátil. Combina potencia, flexibilidad de color y durabilidad en un equipo de construcción robusta, ideal para instalaciones fijas o traslados frecuentes.</p>\n\n<h3>Características Principales</h3>\n\n<ul>\n<li>1 COB LED de 100 W con capacidad de mezcla Frío/Cálido mediante control DMX</li>\n<li>?ngulo de apertura de 60° — rango versátil para aplicaciones cortas y medias</li>\n<li>Fuente anti-flicker integrada — garantiza reproducción limpia sin parpadeos</li>\n<li>Consumo de 120 W — eficiencia energética en instalaciones de larga duración</li>\n<li>2 o 4 canales DMX-512 configurable — adaptable a diferentes ecosistemas de control</li>\n<li>Display multifunción para acceso rápido a funciones y diagnóstico</li>\n<li>Modos de operación: Auto, Master/Slave, DMX-512 — máxima flexibilidad según configuración</li>\n<li>Duración de 50.000 horas — aproximadamente 15 años de funcionamiento continuo</li>\n<li>Enfriamiento pasivo por turbina — funcionamiento silencioso sin generación de calor excesivo</li>\n<li>Estructura de aluminio extruido sólido — peso de 2,9 kg y dimensiones compactas (255 × 255 × 365 mm)</li>\n<li>Acabado en negro mate — discreto en instalaciones fijas o tours</li>\n</ul>\n\n<h3>Funciones de Control</h3>\n\n<ul>\n<li>Mezcla continua Luz Fría a Luz Cálida — encuentre el blanco perfecto para cada aplicación</li>\n<li>Función estroboscópica — efectos dinámicos para eventos y presentaciones</li>\n<li>Control de dimmer — modulación de intensidad completa</li>\n</ul>\n\n<h3>Aplicaciones</h3>\n\n<p>El VT-C001HB funciona como bañador de propósito general (equivalente a PAR64 Wide Flood tradicional), luz estroboscópica para eventos, y fuente de luz principal en instalaciones pequeñas o medianas. Es adecuado para teatros, salones de eventos, estudios de transmisión, espectáculos musicales y cualquier entorno donde se requiera luz blanca variable y control preciso sin inversión en múltiples fixtures.</p>\n\n<p>Su capacidad de control por DMX y la duración extendida de la fuente hacen que sea una solución económica para integradores que buscan equipamiento confiable y de bajo mantenimiento.</p>",
    "seoDescriptionLen": 2330,
    "seoDescriptionSource": "ml_rewritten"
+  },
+  {
+   "id": "541",
+   "documentId": "9721f9886c4705eb8c0ba825",
+   "title": "VT-226-RGB3000",
+   "subtitulo": "Láser Móvil RGB 6 Bocas 3W",
+   "slug": "vt-226-rgb3000",
+   "description": "El Venetian VT-226-RGB3000 es un cabezal móvil láser RGB de 6 bocas de 3 W, con haz grueso de 500 mW por boca. Control DMX de 18 / 33 o 45 canales, modo audiorítmico y automático. Ideal para pistas, boliches y producciones móviles que buscan un efecto aéreo potente y de gran cobertura. Incluye soportes de fijación y cable Powercon.",
+   "price": 1495378.5,
+   "sku": "2410181426048104",
+   "modelo": "VT-226-RGB3000",
+   "categoryName": "laser",
+   "featured": false,
+   "legacySlug": "vt-226-rgb3000",
+   "seoSlug": "laser-movil-rgb-6-bocas-3w-vt-226-rgb3000",
+   "seoDescription": "<p><strong>Cabezal móvil láser RGB de 6 bocas y 3 W, con haz grueso de 500 mW por boca para efectos aéreos potentes y de gran cobertura.</strong></p>\n\n<p>El Venetian VT-226-RGB3000 es un proyector láser de cabezal móvil pensado para DJs, boliches y producciones móviles que necesitan un impacto visual fuerte. Sus 6 bocas RGB independientes generan un abanico de haces gruesos que llenan la pista, con sincronización a la música o secuencias automáticas.</p>\n\n<h3>Características técnicas</h3>\n\n<ul>\n<li><strong>Fuente:</strong> láser RGB, 6 bocas de 3 W (haz grueso de 500 mW cada una)</li>\n<li><strong>Control:</strong> DMX 18 / 33 o 45 canales, audiorítmico y automático</li>\n<li><strong>Medidas:</strong> 76,5 x 25 x 33 cm</li>\n<li><strong>Incluye:</strong> soportes de fijación x2 y cable Powercon</li>\n<li><strong>Garantía:</strong> 6 meses</li>\n</ul>",
+   "seoDescriptionLen": 857,
+   "seoDescriptionSource": "ml_rewritten"
   }
  ],
  "categorias": [
@@ -9844,7 +9862,7 @@
    "name": "laser",
    "slug": "laser",
    "description": "Productos de laser",
-   "productCount": 28
+   "productCount": 29
   },
   {
    "id": "n2v66acz8c1znndxag3348yc",
@@ -9953,5 +9971,5 @@
   }
  ],
  "slugMigratedAt": "2026-05-12T20:28:40.773Z",
- "pricesUpdatedAt": "2026-07-24T10:00:14"
+ "pricesUpdatedAt": "2026-07-30T10:00:10"
 }
