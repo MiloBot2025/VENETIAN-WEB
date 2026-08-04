@@ -8181,7 +8181,7 @@
    "subtitulo": "Efecto LED 2 en 1 con Láser",
    "slug": "ef-500",
    "description": "Venetian EF-500 combina un efecto LED RGBW de 8 leds de 3W con un láser rojo y verde multipuntos, ofreciendo 8 patrones dinámicos. Se controla mediante DMX (7 canales), audio, modo automático o maestro/esclavo, siendo ideal para crear atmósferas visuales en bares, salones y eventos por su versatilidad y potencia.",
-   "price": 196795.69,
+   "price": 150000.0,
    "sku": "1911201151485344",
    "modelo": "EF-500",
    "categoryName": "efecto de luces",
@@ -8541,7 +8541,7 @@
    "subtitulo": "Efecto LED de Gobo 8 Colores",
    "slug": "spg008",
    "description": "Venetian SPG 008 es un efecto LED potente que proyecta 8 gobos coloridos mediante 8 LEDs CREE de 3W en RGBW. Se controla por DMX (7 canales), con modos automático, master/slave y activación por sonido, ofreciendo dimmer lineal y efecto estroboscópico. Su construcción robusta lo hace apto para uso profesional en eventos y espectáculos.",
-   "price": 149000.0,
+   "price": 150000.0,
    "sku": "1911201232449449",
    "modelo": "SPG008",
    "categoryName": "efecto de luces",
@@ -9971,5 +9971,5 @@
   }
  ],
  "slugMigratedAt": "2026-05-12T20:28:40.773Z",
- "pricesUpdatedAt": "2026-08-01T10:00:10"
+ "pricesUpdatedAt": "2026-08-04T10:00:13"
 }
