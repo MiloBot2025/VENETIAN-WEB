@@ -3429,7 +3429,7 @@
    "subtitulo": "Efecto LED Mini Spider",
    "slug": "vt-m30a",
    "description": "Venetian VT-M30A es un efecto de iluminación compacto con 8 LEDs de 3W RGBW que proyecta haces de luz de ángulo estrecho y movimiento rápido. Se controla mediante DMX (10/38 canales), incluye modos automático, maestro/esclavo y activado por sonido. Su diseño ligero y su potencia lo hacen ideal para crear efectos dinámicos en pistas de baile y eventos.",
-   "price": 99000.0,
+   "price": 115000.0,
    "sku": "2002031322563719",
    "modelo": "VT-M30A",
    "categoryName": "efecto de luces",
@@ -9971,5 +9971,5 @@
   }
  ],
  "slugMigratedAt": "2026-05-12T20:28:40.773Z",
- "pricesUpdatedAt": "2026-08-04T10:00:13"
+ "pricesUpdatedAt": "2026-08-05T10:00:11"
 }
