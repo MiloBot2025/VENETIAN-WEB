@@ -9369,7 +9369,7 @@
    "subtitulo": "Máquina de Humo 600W",
    "slug": "z-600",
    "description": "Venetian Z-600 es una máquina de humo compacta de 600W, ideal para espacios reducidos como bares o pubs. Ofrece control manual y remoto inalámbrico con alcance de 25 metros, con un tiempo de calentamiento rápido y una potente salida de humo. Su diseño práctico facilita su uso en diversos eventos.",
-   "price": 70000,
+   "price": 54239.13,
    "sku": "2203171101526890",
    "modelo": "Z-600",
    "categoryName": "maquina de humo",
@@ -9989,5 +9989,5 @@
   }
  ],
  "slugMigratedAt": "2026-05-12T20:28:40.773Z",
- "pricesUpdatedAt": "2026-08-11T10:00:11"
+ "pricesUpdatedAt": "2026-08-20T10:00:13"
 }
