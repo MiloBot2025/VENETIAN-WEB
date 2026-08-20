@@ -1,6 +1,6 @@
 {
  "generatedAt": "2026-04-27T03:57:52.159Z",
- "totalProducts": 540,
+ "totalProducts": 541,
  "productos": [
   {
    "id": "347",
@@ -9721,6 +9721,24 @@
    "seoDescription": "<p><strong>Cabezal móvil láser RGB de 6 bocas y 3 W, con haz grueso de 500 mW por boca para efectos aéreos potentes y de gran cobertura.</strong></p>\n\n<p>El Venetian VT-226-RGB3000 es un proyector láser de cabezal móvil pensado para DJs, boliches y producciones móviles que necesitan un impacto visual fuerte. Sus 6 bocas RGB independientes generan un abanico de haces gruesos que llenan la pista, con sincronización a la música o secuencias automáticas.</p>\n\n<h3>Características técnicas</h3>\n\n<ul>\n<li><strong>Fuente:</strong> láser RGB, 6 bocas de 3 W (haz grueso de 500 mW cada una)</li>\n<li><strong>Control:</strong> DMX 18 / 33 o 45 canales, audiorítmico y automático</li>\n<li><strong>Medidas:</strong> 76,5 x 25 x 33 cm</li>\n<li><strong>Incluye:</strong> soportes de fijación x2 y cable Powercon</li>\n<li><strong>Garantía:</strong> 6 meses</li>\n</ul>",
    "seoDescriptionLen": 857,
    "seoDescriptionSource": "ml_rewritten"
+  },
+  {
+   "id": "542",
+   "documentId": "aec2721f131b8195b99bc6b8",
+   "title": "BM-800 Black",
+   "subtitulo": "Micrófono Condenser USB Podcast Combo Negro",
+   "slug": "bm-800-black",
+   "description": "Micrófono condenser Venetian BM-800 Black en combo completo para podcast, streaming y grabación hogareña. Incluye micrófono BM-800 negro con rejilla dorada, brazo articulado de escritorio con morsa, araña antivibración, filtro antipop, espuma paravientos y cable USB. Conectalo directo a la PC y empezá a grabar.",
+   "price": 51140.65,
+   "sku": "2010011037587971",
+   "modelo": "BM-800 Black",
+   "categoryName": "microfono",
+   "featured": false,
+   "legacySlug": "bm-800-black",
+   "seoSlug": "microfono-condenser-usb-podcast-combo-bm-800-black",
+   "seoDescription": "<p>El <strong>Venetian BM-800 Black</strong> es un micrófono condenser pensado para podcast, streaming, locución y grabación hogareña. Este combo trae todo lo necesario para montarlo en el escritorio y conectarlo directo a la PC por USB, sin interfaces adicionales.</p><p><strong>El combo incluye:</strong></p><ul><li>Micrófono condenser BM-800 (negro con rejilla dorada)</li><li>Brazo articulado de escritorio con morsa de fijación</li><li>Araña antivibración (shock mount)</li><li>Filtro antipop de doble malla</li><li>Espuma paravientos</li><li>Cable USB</li></ul><p><strong>Especificaciones:</strong></p><ul><li>Medidas de embalaje: 28 x 22 x 11 cm</li><li>Peso: 750 g</li></ul>",
+   "seoDescriptionLen": 682,
+   "seoDescriptionSource": "manual"
   }
  ],
  "categorias": [
@@ -9918,7 +9936,7 @@
    "name": "microfono",
    "slug": "microfono",
    "description": "Productos de microfono",
-   "productCount": 17
+   "productCount": 18
   },
   {
    "id": "zrovjybzrbom50t47ln42oko",
