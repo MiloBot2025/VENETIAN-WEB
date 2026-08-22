@@ -8271,7 +8271,7 @@
    "subtitulo": "Consola DMX 512 Canales",
    "slug": "pilot-2000",
    "description": "Venetian PILOT 2000 es una consola de iluminación DMX 512 con control de hasta 40 luminarias y 12 escenas programables. Pantalla LCD, control de chase con velocidad variable, modo automático y manual, salida DMX estándar de 3 pines. Ideal para eventos, boliches y producciones en vivo. La versión Flycase incluye estuche rígido para transporte.",
-   "price": 497323.94,
+   "price": 449000.0,
    "sku": "2506181657518453",
    "modelo": "Pilot 2000",
    "categoryName": "consola dmx",
@@ -8649,7 +8649,7 @@
    "subtitulo": "Consola DMX 512 Canales",
    "slug": "pilot-2000-fc",
    "description": "Venetian PILOT 2000 FlyCase es una consola de iluminación DMX 512 con control de hasta 40 luminarias y 12 escenas programables. Pantalla LCD, control de chase con velocidad variable, modo automático y manual, salida DMX estándar de 3 pines. Ideal para eventos, boliches y producciones en vivo. La versión Flycase incluye estuche rígido para transporte.",
-   "price": 621654.92,
+   "price": 570000.0,
    "sku": "2506181652158722",
    "modelo": "Pilot 2000 FC",
    "categoryName": "consola dmx",
@@ -9989,5 +9989,5 @@
   }
  ],
  "slugMigratedAt": "2026-05-12T20:28:40.773Z",
- "pricesUpdatedAt": "2026-08-20T10:00:13"
+ "pricesUpdatedAt": "2026-08-22T10:00:10"
 }
