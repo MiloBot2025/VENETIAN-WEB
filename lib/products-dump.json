@@ -1377,7 +1377,7 @@
    "subtitulo": "Pipeta de Micrófono de Mano",
    "slug": "m-7",
    "description": "Venetian M-7 es una pipeta de micrófono de mano tipo compatible estándar, fabricada con rosca metálica de 5/8\" (15.87mm) para una sujeción segura y profesional. Su diseño robusto y estándar lo hace compatible y confiable para uso en escenario.",
-   "price": 6149.83,
+   "price": 7900.0,
    "sku": "1911111248423467",
    "modelo": "M-7",
    "categoryName": "soporte",
@@ -9989,5 +9989,5 @@
   }
  ],
  "slugMigratedAt": "2026-05-12T20:28:40.773Z",
- "pricesUpdatedAt": "2026-09-03T10:00:10"
+ "pricesUpdatedAt": "2026-09-08T10:00:10"
 }
