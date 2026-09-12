@@ -3213,7 +3213,7 @@
    "subtitulo": "Subwoofer Activo Profesional 18\"",
    "slug": "ig18s-pro",
    "description": "Venetian IG18S PRO es un subwoofer activo profesional de alto rendimiento, equipado con un woofer de 18 pulgadas y un amplificador Clase D con DSP de 1100W RMS. Su gabinete de MDF de 18 mm garantiza graves potentes y definidos, con una alta presión sonora ideal para eventos, DJs y refuerzo de sistemas de audio. Ofrece conectividad profesional mediante entradas combinadas XLR y Jack 1/4\".",
-   "price": 1479000,
+   "price": 1679000.0,
    "sku": "2602111531294591",
    "modelo": "IG18S PRO",
    "categoryName": "bafle",
@@ -9989,5 +9989,5 @@
   }
  ],
  "slugMigratedAt": "2026-05-12T20:28:40.773Z",
- "pricesUpdatedAt": "2026-09-11T10:00:10"
+ "pricesUpdatedAt": "2026-09-12T10:00:11"
 }
