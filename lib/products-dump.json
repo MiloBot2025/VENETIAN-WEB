@@ -3447,7 +3447,7 @@
    "subtitulo": "Cabezal Móvil LED Beam 230W",
    "slug": "vt-mh230n",
    "description": "Venetian VT-MH230N es un cabezal móvil de haz de 230W que ofrece un haz concentrado de 8° con gran precisión. Cuenta con rueda de 14 colores, prisma de 8 caras y control DMX de 16/20 canales. Su motorización silenciosa y funciones como estrobo y frost lo hacen ideal para escenarios y eventos que requieren efectos de luz dinámicos y potentes.",
-   "price": 710000.0,
+   "price": 649000.0,
    "sku": "2311071727418483",
    "modelo": "VT-MH230N",
    "categoryName": "cabezal",
@@ -9989,5 +9989,5 @@
   }
  ],
  "slugMigratedAt": "2026-05-12T20:28:40.773Z",
- "pricesUpdatedAt": "2026-09-12T10:00:11"
+ "pricesUpdatedAt": "2026-09-20T10:00:10"
 }
