@@ -9531,7 +9531,7 @@
    "subtitulo": "Máquina de Espuma Profesional",
    "slug": "fm-1200",
    "description": "Venetian FM-1200 es una máquina de espuma profesional de gran caudal, diseñada para crear efectos visuales impactantes en eventos y espectáculos. Cuenta con un ventilador de alto rendimiento que proyecta la espuma a distancias de 3 a 4 metros, con un ángulo de proyección ajustable de 0 a 60 grados. Su diseño compacto y robusto permite una instalación versátil en superficie, colgado o invertido, facilitando su operación mediante el panel de control integrado.",
-   "price": 597930,
+   "price": 699000.0,
    "sku": "2602131117399018",
    "modelo": "FM-1200",
    "categoryName": "maquina de espuma",
@@ -9989,5 +9989,5 @@
   }
  ],
  "slugMigratedAt": "2026-05-12T20:28:40.773Z",
- "pricesUpdatedAt": "2026-09-20T10:00:10"
+ "pricesUpdatedAt": "2026-09-23T10:00:11"
 }
