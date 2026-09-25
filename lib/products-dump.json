@@ -3915,7 +3915,7 @@
    "subtitulo": "Máquina de Burbujas Compacta",
    "slug": "b-60",
    "description": "Venetian B-60 es una máquina de burbujas compacta y eficiente, con un tanque de 0.6 litros y un consumo de solo 12W. Su diseño permite proyectar burbujas a una distancia de hasta 4 metros, siendo ideal para animar fiestas y eventos en interiores o al aire libre.",
-   "price": 61000.0,
+   "price": 65000.0,
    "sku": "2203171125595585",
    "modelo": "B-60",
    "categoryName": "maquina de burbujas",
@@ -9989,5 +9989,5 @@
   }
  ],
  "slugMigratedAt": "2026-05-12T20:28:40.773Z",
- "pricesUpdatedAt": "2026-09-23T10:00:11"
+ "pricesUpdatedAt": "2026-09-25T10:00:11"
 }
