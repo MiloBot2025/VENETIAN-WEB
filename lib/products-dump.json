@@ -1341,7 +1341,7 @@
    "subtitulo": "Splitter DMX 1 Entrada 8 Salidas",
    "slug": "splitter-d-8-pro",
    "description": "Venetian Splitter D8-Pro distribuye una señal DMX512 de forma impecable desde una entrada a ocho salidas optoacopladas, garantizando aislamiento eléctrico total para evitar interferencias. Su construcción robusta incluye indicadores LED por canal y es compatible con racks de 19\", ofreciendo una solución confiable para instalaciones fijas o giras profesionales.",
-   "price": 161630.28,
+   "price": 184500.0,
    "sku": "2506181641337058",
    "modelo": "Splitter D-8 Pro",
    "categoryName": "splitter dmx",
@@ -9989,5 +9989,5 @@
   }
  ],
  "slugMigratedAt": "2026-05-12T20:28:40.773Z",
- "pricesUpdatedAt": "2026-10-02T10:00:13"
+ "pricesUpdatedAt": "2026-10-03T10:00:12"
 }
