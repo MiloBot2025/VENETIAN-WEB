@@ -2871,7 +2871,7 @@
    "subtitulo": "Tacho LED Par RGB 6x1.5W",
    "slug": "lpr1206",
    "description": "Venetian LPR1206 es un tacho LED Par con 6 LEDs de 1.5W en colores RGB, ideal para iluminación decorativa en interiores. Funciona en modo automático o activado por sonido, con un bajo consumo de energía y una larga vida útil. Su diseño compacto y versátil lo hace perfecto para bares, fiestas y eventos.",
-   "price": 19000.0,
+   "price": 17000.0,
    "sku": "1911201232412533",
    "modelo": "LPR1206",
    "categoryName": "par led",
@@ -8019,7 +8019,7 @@
    "subtitulo": "Proyector Láser RGB 500mW",
    "slug": "vt-500rgb",
    "description": "Venetian VT-500RGB es un proyector láser RGB de 500mW que genera efectos multicolores dinámicos para espectáculos y eventos. Se controla vía DMX para un manejo profesional y cuenta con modo audiorítmico para sincronizar automáticamente los efectos con la música. Su construcción en metal y diseño compacto aseguran durabilidad y portabilidad.",
-   "price": 165000,
+   "price": 170000.0,
    "sku": "1911201152022721",
    "modelo": "VT-500RGB",
    "categoryName": "laser",
@@ -8883,7 +8883,7 @@
    "subtitulo": "Cable DMX 3 Pines Profesional",
    "slug": "dmx-200",
    "description": "Venetian cable DMX de 3 pines XLR macho a hembra, blindado 120 Ohms para transmisión de señal DMX512 sin pérdidas. Construcción con conectores metálicos profesionales y carcasa reforzada. Ideal para iluminación escenográfica, control de efectos y conexión de luminarias DMX en vivo.",
-   "price": 103609.16,
+   "price": 89775.0,
    "sku": "2506181607061104",
    "modelo": "DMX 200",
    "categoryName": "consola dmx",
@@ -9989,5 +9989,5 @@
   }
  ],
  "slugMigratedAt": "2026-05-12T20:28:40.773Z",
- "pricesUpdatedAt": "2026-10-03T10:00:12"
+ "pricesUpdatedAt": "2026-10-08T10:00:12"
 }
