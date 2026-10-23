@@ -1611,7 +1611,7 @@
    "subtitulo": "Cable Multipar Snake por Metro",
    "slug": "cbl31-32-cores",
    "description": "Venetian Cbl31-32 x Metro es un cable multipar (snake cable) vendido por metro, con blindaje individual par a par y baja diafonía. Ideal para confección personalizada de multipares o uso en instalaciones fijas. Cable flexible con carcasa resistente, apto para aplicaciones de audio profesional en escenario y estudio.",
-   "price": 40295.62,
+   "price": 41970.0,
    "sku": "1911051554518447",
    "modelo": "CBL31-32 Cores",
    "categoryName": "manguera de sonido",
@@ -4005,7 +4005,7 @@
    "subtitulo": "Cable Multipar Snake por Metro",
    "slug": "cbl31-24-cores",
    "description": "Venetian Cbl31-24 x Metro es un cable multipar (snake cable) vendido por metro, con blindaje individual par a par y baja diafonía. Ideal para confección personalizada de multipares o uso en instalaciones fijas. Cable flexible con carcasa resistente, apto para aplicaciones de audio profesional en escenario y estudio.",
-   "price": 28668.48,
+   "price": 31480.0,
    "sku": "1911051554525158",
    "modelo": "CBL31-24 Cores",
    "categoryName": "manguera de sonido",
@@ -4239,7 +4239,7 @@
    "subtitulo": "Cable Multipar Snake por Metro",
    "slug": "cbl31-40-cores",
    "description": "Venetian Cbl31-40 x Metro es un cable multipar (snake cable) vendido por metro, con blindaje individual par a par y baja diafonía. Ideal para confección personalizada de multipares o uso en instalaciones fijas. Cable flexible con carcasa resistente, apto para aplicaciones de audio profesional en escenario y estudio.",
-   "price": 44290.39,
+   "price": 52470.0,
    "sku": "1911051554442800",
    "modelo": "CBL31-40 Cores",
    "categoryName": "manguera de sonido",
@@ -9989,5 +9989,5 @@
   }
  ],
  "slugMigratedAt": "2026-05-12T20:28:40.773Z",
- "pricesUpdatedAt": "2026-10-16T10:00:06"
+ "pricesUpdatedAt": "2026-10-23T10:00:05"
 }
