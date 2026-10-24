@@ -3681,7 +3681,7 @@
    "subtitulo": "Máquina de Nieve 1500W",
    "slug": "sn-1500",
    "description": "Venetian SN-1500 es una máquina de nieve de 1500W que genera una gran cantidad de copos de espuma para crear efectos visuales impactantes. Cuenta con un depósito de 5 litros y se opera mediante un control remoto inalámbrico, ofreciendo un funcionamiento sencillo y un diseño compacto ideal para eventos, escenarios y ambientaciones temáticas.",
-   "price": 199000,
+   "price": 218900.0,
    "sku": "2602131113141111",
    "modelo": "SN-1500",
    "categoryName": "maquina de nieve",
@@ -3915,7 +3915,7 @@
    "subtitulo": "Máquina de Burbujas Compacta",
    "slug": "b-60",
    "description": "Venetian B-60 es una máquina de burbujas compacta y eficiente, con un tanque de 0.6 litros y un consumo de solo 12W. Su diseño permite proyectar burbujas a una distancia de hasta 4 metros, siendo ideal para animar fiestas y eventos en interiores o al aire libre.",
-   "price": 70000.0,
+   "price": 75000.0,
    "sku": "2203171125595585",
    "modelo": "B-60",
    "categoryName": "maquina de burbujas",
@@ -8631,7 +8631,7 @@
    "subtitulo": "Máquina de Humo Profesional 3000W",
    "slug": "zma-3000",
    "description": "Venetian ZMA-3000 es una máquina de humo profesional de 3000W que genera un gran volumen de humo para espacios amplios. Cuenta con control DMX512, ángulo de salida ajustable y un sistema de calentamiento rápido, ideal para integrar en escenarios, discotecas y producciones audiovisuales.",
-   "price": 300000,
+   "price": 330000.0,
    "sku": "2602131441554064",
    "modelo": "ZMA-3000",
    "categoryName": "maquina de humo",
@@ -9297,7 +9297,7 @@
    "subtitulo": "Kit de Cabezales Móviles Beam 150W",
    "slug": "beamcore-150-kit",
    "description": "Venetian Beam Core 150 KIT es un sistema profesional que incluye seis cabezales móviles beam de 150W y un flight case anvil para transporte. Cada cabezal genera un haz potente y definido, con rueda de colores, gobos, prisma triple y un aro LED RGB para efectos visuales dinámicos. Se controla mediante DMX de 14 canales o en modos automático y maestro/esclavo, siendo ideal para shows en vivo y discotecas.",
-   "price": 2310000.0,
+   "price": 2499000.0,
    "sku": "2602251754319650",
    "modelo": "BEAMCORE 150 KIT",
    "categoryName": "cabezal",
@@ -9989,5 +9989,5 @@
   }
  ],
  "slugMigratedAt": "2026-05-12T20:28:40.773Z",
- "pricesUpdatedAt": "2026-10-23T10:00:05"
+ "pricesUpdatedAt": "2026-10-24T10:00:05"
 }
