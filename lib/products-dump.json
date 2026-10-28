@@ -1665,7 +1665,7 @@
    "subtitulo": "Soporte de Micrófono de Piso",
    "slug": "ms-50b",
    "description": "Venetian MS-50B es un soporte de micrófono de piso robusto, construido en acero para una gran estabilidad. Con una altura de 1.3 metros y un peso de 0.85 kg, es ideal para sostener micrófonos de condensador y dinámicos en estudios de grabación o presentaciones en vivo.",
-   "price": 27572.62,
+   "price": 29900.0,
    "sku": "1911081331356274",
    "modelo": "MS-50B",
    "categoryName": "soporte",
@@ -9989,5 +9989,5 @@
   }
  ],
  "slugMigratedAt": "2026-05-12T20:28:40.773Z",
- "pricesUpdatedAt": "2026-10-24T10:00:05"
+ "pricesUpdatedAt": "2026-10-28T10:00:06"
 }
