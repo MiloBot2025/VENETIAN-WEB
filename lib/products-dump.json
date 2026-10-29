@@ -8541,7 +8541,7 @@
    "subtitulo": "Efecto LED de Gobo 8 Colores",
    "slug": "spg008",
    "description": "Venetian SPG 008 es un efecto LED potente que proyecta 8 gobos coloridos mediante 8 LEDs CREE de 3W en RGBW. Se controla por DMX (7 canales), con modos automático, master/slave y activación por sonido, ofreciendo dimmer lineal y efecto estroboscópico. Su construcción robusta lo hace apto para uso profesional en eventos y espectáculos.",
-   "price": 150000.0,
+   "price": 99000.0,
    "sku": "1911201232449449",
    "modelo": "SPG008",
    "categoryName": "efecto de luces",
@@ -9989,5 +9989,5 @@
   }
  ],
  "slugMigratedAt": "2026-05-12T20:28:40.773Z",
- "pricesUpdatedAt": "2026-10-28T10:00:06"
+ "pricesUpdatedAt": "2026-10-29T10:00:05"
 }
