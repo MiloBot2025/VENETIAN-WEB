@@ -1,6 +1,6 @@
 {
  "generatedAt": "2026-04-27T03:57:52.159Z",
- "totalProducts": 541,
+ "totalProducts": 542,
  "productos": [
   {
    "id": "347",
@@ -3825,7 +3825,7 @@
    "subtitulo": "Máquina de Humo 400W con LED RGB",
    "slug": "zl-400",
    "description": "Venetian ZL-400 es una máquina de humo de 400W con un tanque de 0.25 litros y tres LEDs RGB integrados. Se controla mediante panel manual, control remoto por cable o inalámbrico, siendo ideal para generar atmósfera en espacios reducidos como bares o pubs.",
-   "price": 60000,
+   "price": 67200.0,
    "sku": "2408161720184501",
    "modelo": "ZL-400",
    "categoryName": "maquina de humo",
@@ -9279,7 +9279,7 @@
    "subtitulo": "Máquina de Burbujas con Control Inalámbrico",
    "slug": "b-300",
    "description": "Venetian B-300 es una máquina de burbujas profesional con control remoto inalámbrico, ideal para eventos y espectáculos. Cuenta con un tanque de 2.5 litros, una proyección de aproximadamente 10 metros y un consumo de 300W. Su diseño estable y silencioso, con ventiladores ascendentes, garantiza una producción abundante y continua de burbujas.",
-   "price": 199000,
+   "price": 225000.0,
    "sku": "1911071807347616",
    "modelo": "B-300",
    "categoryName": "maquina de burbujas",
@@ -9369,7 +9369,7 @@
    "subtitulo": "Máquina de Humo 600W",
    "slug": "z-600",
    "description": "Venetian Z-600 es una máquina de humo compacta de 600W, ideal para espacios reducidos como bares o pubs. Ofrece control manual y remoto inalámbrico con alcance de 25 metros, con un tiempo de calentamiento rápido y una potente salida de humo. Su diseño práctico facilita su uso en diversos eventos.",
-   "price": 54239.13,
+   "price": 59900.0,
    "sku": "2203171101526890",
    "modelo": "Z-600",
    "categoryName": "maquina de humo",
@@ -9729,7 +9729,7 @@
    "subtitulo": "Micrófono Condenser USB Podcast Combo Negro",
    "slug": "bm-800-black",
    "description": "Micrófono condenser Venetian BM-800 Black en combo completo para podcast, streaming y grabación hogareña. Incluye micrófono BM-800 negro con rejilla dorada, brazo articulado de escritorio con morsa, araña antivibración, filtro antipop, espuma paravientos y cable USB. Conectalo directo a la PC y empezá a grabar.",
-   "price": 32900.0,
+   "price": 32999.0,
    "sku": "2010011037587971",
    "modelo": "BM-800 Black",
    "categoryName": "microfono",
@@ -9738,6 +9738,24 @@
    "seoSlug": "microfono-condenser-usb-podcast-combo-bm-800-black",
    "seoDescription": "<p>El <strong>Venetian BM-800 Black</strong> es un micrófono condenser pensado para podcast, streaming, locución y grabación hogareña. Este combo trae todo lo necesario para montarlo en el escritorio y conectarlo directo a la PC por USB, sin interfaces adicionales.</p><p><strong>El combo incluye:</strong></p><ul><li>Micrófono condenser BM-800 (negro con rejilla dorada)</li><li>Brazo articulado de escritorio con morsa de fijación</li><li>Araña antivibración (shock mount)</li><li>Filtro antipop de doble malla</li><li>Espuma paravientos</li><li>Cable USB</li></ul><p><strong>Especificaciones:</strong></p><ul><li>Medidas de embalaje: 28 x 22 x 11 cm</li><li>Peso: 750 g</li></ul>",
    "seoDescriptionLen": 682,
+   "seoDescriptionSource": "manual"
+  },
+  {
+   "id": "543",
+   "documentId": "e1242120ec33352445566e67",
+   "title": "OD152",
+   "subtitulo": "Par LED Exterior RGB 54x3W IP65",
+   "slug": "od152",
+   "description": "Venetian OD152 es un par LED de exterior con 54 LEDs de 3W RGB 3 en 1 (162W), en carcasa de aluminio estanca IP65. Se controla por DMX-512, en modo automático, audiorrítmico o maestro-esclavo, con entrada y salida de DMX y alimentación para encadenar equipos. Ideal para fachadas, jardines, eventos al aire libre y escenarios.",
+   "price": 249000.0,
+   "sku": "2602251754361613",
+   "modelo": "OD152",
+   "categoryName": "par led",
+   "featured": false,
+   "legacySlug": "od152",
+   "seoSlug": "par-led-exterior-rgb-54x3w-ip65-od152",
+   "seoDescription": "<p><strong>Venetian OD152: Par LED de exterior 54 x 3W RGB 3 en 1</strong></p><p>Tacho PAR estanco para uso a la intemperie: 54 LEDs de 3W tricolor (cada LED mezcla rojo, verde y azul), color parejo y potente para bañar fachadas, árboles, escenarios al aire libre y pistas.</p><h3>Características</h3><ul><li>Fuente de luz: 54 LEDs de 3W RGB 3 en 1 (162W de LED)</li><li>Uso exterior: carcasa estanca IP65, cables con prensacables y display sellado</li><li>Control DMX-512, automático, audiorrítmico y maestro-esclavo</li><li>Función strobo</li><li>Entrada y salida de alimentación y de DMX para conectar varios equipos en cadena</li><li>Display digital de 4 dígitos con 4 botones de menú</li><li>Carcasa de aluminio con disipador</li><li>Soporte tipo lira con perillas de ajuste, apto para colgar o apoyar</li><li>Alimentación: 220V</li></ul><h3>Especificaciones de embalaje</h3><ul><li>Medidas: 25 x 25 x 32 cm</li><li>Peso: 8 kg</li></ul><h3>Aplicaciones</h3><p>Iluminación arquitectónica, jardines, eventos al aire libre, escenarios, salones, iglesias, bandas y DJs.</p>",
+   "seoDescriptionLen": 1074,
    "seoDescriptionSource": "manual"
   }
  ],
@@ -9964,7 +9982,7 @@
    "name": "par led",
    "slug": "par-led",
    "description": "Productos de par led",
-   "productCount": 20
+   "productCount": 21
   },
   {
    "id": "fvgjpof5eym865gm1xr659uc",
@@ -9989,5 +10007,5 @@
   }
  ],
  "slugMigratedAt": "2026-05-12T20:28:40.773Z",
- "pricesUpdatedAt": "2026-10-29T10:00:05"
+ "pricesUpdatedAt": "2026-10-31T10:00:06"
 }
