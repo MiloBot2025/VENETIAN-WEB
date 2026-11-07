@@ -2907,7 +2907,7 @@
    "subtitulo": "Bañador LED PAR RGB 54 Leds",
    "slug": "vt-pc015",
    "description": "Venetian VT-PC015 es un bañador LED PAR de 150W que integra 54 LEDs RGB de 3W para generar una amplia gama de colores. Se controla mediante DMX (3 o 7 canales), modo automático, audiorítmico o en cadena maestro/esclavo, y cuenta con pantalla LCD para su configuración. Su diseño compacto y su potencia lo hacen versátil para iluminar escenarios, eventos y espacios arquitectónicos.",
-   "price": 79000.0,
+   "price": 85320.0,
    "sku": "2402161622361578",
    "modelo": "VT-PC015",
    "categoryName": "par led",
@@ -5445,7 +5445,7 @@
    "subtitulo": "Aro de Luz LED con Soporte para Streaming",
    "slug": "zb-02",
    "description": "Venetian ZB-02 es un kit completo para streaming que incluye un aro de luz LED de 26 cm con control remoto y un soporte recto ajustable de hasta 2 metros. El aro se alimenta por USB y el soporte, de construcción robusta, permite montar un teléfono o cámara. Es una solución liviana y compacta, ideal para crear contenido en redes sociales y transmisiones en vivo.",
-   "price": 36984.47,
+   "price": 32990.0,
    "sku": "2011021414107677",
    "modelo": "ZB-02",
    "categoryName": "soporte",
@@ -10007,5 +10007,5 @@
   }
  ],
  "slugMigratedAt": "2026-05-12T20:28:40.773Z",
- "pricesUpdatedAt": "2026-11-05T10:00:05"
+ "pricesUpdatedAt": "2026-11-07T10:00:05"
 }
